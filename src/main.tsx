@@ -6,6 +6,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 
 import Language from '@/components/common/language';
 import Theme from '@/components/common/theme';
+import { Toaster } from '@/components/ui/sonner';
 
 import { Routes } from '@/routes/routes';
 import { persistor, store } from '@/store/store';
@@ -16,6 +17,7 @@ createRoot(document.getElementById('root')!).render(
     <ReduxProvider store={store}>
       <PersistGate persistor={persistor} loading={null}>
         <BrowserRouter>
+          <Toaster />
           <Theme />
           <Language />
           <Routes />
