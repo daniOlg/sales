@@ -7,10 +7,33 @@ export type I18nState = {
 
 export type SupportedLangs = Record<string, string>;
 
-export type Translations = Partial<{
+export type Translations = {
   home: string;
-  notFound: string;
+  oops: string;
   pageNotFound: string;
   goBackToHome: string;
-  oops: string;
-}>;
+  login: {
+    title: string;
+    description: string;
+    email: string;
+    emailPlaceholder: string;
+    password: string;
+    passwordPlaceholder: string;
+    registerButton: string;
+    loginButton: string;
+  };
+  register: {
+    title: string;
+    description: string;
+    name: string;
+    namePlaceholder: string;
+    email: string;
+    emailPlaceholder: string;
+    password: string;
+    passwordPlaceholder: string;
+    confirmPassword: string;
+    confirmPasswordPlaceholder: string;
+    backToLogin: string;
+    registerButton: string;
+  };
+};

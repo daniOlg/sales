@@ -2,5 +2,29 @@
   "home": "Inicio",
   "oops": "¡Ups!",
   "pageNotFound": "Se produjo un error al cargar esta página",
-  "goBackToHome": "Volver a inicio"
+  "goBackToHome": "Volver a inicio",
+  "login": {
+    "title": "Iniciar sesión",
+    "description": "Ingresa tus credenciales para acceder a tu cuenta.",
+    "email": "Correo electrónico",
+    "emailPlaceholder": "Ingresa tu correo electrónico",
+    "password": "Contraseña",
+    "passwordPlaceholder": "Ingresa tu contraseña",
+    "registerButton": "Registrarse",
+    "loginButton": "Iniciar sesión"
+  },
+  "register": {
+    "title": "Crear cuenta",
+    "description": "Completa tus detalles para crear una nueva cuenta.",
+    "name": "Nombre completo",
+    "namePlaceholder": "Ingresa tu nombre completo",
+    "email": "Correo electrónico",
+    "emailPlaceholder": "Ingresa tu correo electrónico",
+    "password": "Contraseña",
+    "passwordPlaceholder": "Crea una contraseña",
+    "confirmPassword": "Confirmar contraseña",
+    "confirmPasswordPlaceholder": "Confirma tu contraseña",
+    "backToLogin": "Volver a inicio de sesión",
+    "registerButton": "Registrarse"
+  }
 }

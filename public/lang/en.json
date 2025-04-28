@@ -2,5 +2,29 @@
   "home": "Home",
   "oops": "Oops!",
   "pageNotFound": "An error occurred while loading this page",
-  "goBackToHome": "Go back to home"
+  "goBackToHome": "Go back to home",
+  "login": {
+    "title": "Login",
+    "description": "Enter your credentials to access your account.",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "registerButton": "Register",
+    "loginButton": "Login"
+  },
+  "register": {
+    "title": "Create Account",
+    "description": "Fill in your details to create a new account.",
+    "name": "Full Name",
+    "namePlaceholder": "Enter your full name",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email",
+    "password": "Password",
+    "passwordPlaceholder": "Create a password",
+    "confirmPassword": "Confirm Password",
+    "confirmPasswordPlaceholder": "Confirm your password",
+    "backToLogin": "Back to Login",
+    "registerButton": "Register"
+  }
 }
