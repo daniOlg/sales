@@ -1,0 +1,104 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "es2020": true,
+    "node": true
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    }
+  },
+  "ignorePatterns": ["dist", ".eslintrc"],
+  "extends": [
+    "airbnb",
+    "airbnb/hooks",
+    "plugin:react/jsx-runtime",
+    "plugin:react-hooks/recommended"
+  ],
+  "rules": {
+    "react/require-default-props": "off",
+    "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["state"] }],
+    "import/prefer-default-export": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react-refresh/only-export-components": [
+      "warn",
+      { "allowConstantExport": true }
+    ],
+    "import/no-extraneous-dependencies": [
+      "error",
+      { "devDependencies": ["electron.vite.config.ts"] }
+    ],
+    "import/no-cycle": "off",
+    "no-underscore-dangle": "off",
+    "sort-imports": [
+      "error",
+      {
+        "ignoreCase": true,
+        "ignoreDeclarationSort": true,
+        "ignoreMemberSort": false,
+        "memberSyntaxSortOrder": ["none", "all", "multiple", "single"]
+      }
+    ],
+    "import/order": [
+      "error",
+      {
+        "groups": ["external", "builtin", "internal", "sibling", "parent", "index"],
+        "pathGroups": [
+          { "pattern": "components", "group": "internal" },
+          { "pattern": "common", "group": "internal" },
+          { "pattern": "routes/**", "group": "internal" },
+          { "pattern": "assets/**", "group": "internal", "position": "after" }
+        ],
+        "pathGroupsExcludedImportTypes": ["internal"],
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ]
+  },
+  "plugins": ["react-refresh"],
+  "overrides": [
+    {
+      "files": ["src/**/*.ts", "src/**/*.tsx"],
+      "parserOptions": {
+        "project": ["./tsconfig.json"],
+        "EXPERIMENTAL_useSourceOfProjectReferenceRedirect": true
+      },
+      "extends": [
+        "airbnb-typescript",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking"
+      ],
+      "rules": {
+        "@typescript-eslint/no-floating-promises": "off",
+        "@typescript-eslint/no-misused-promises": [
+          "error",
+          {
+            "checksVoidReturn": false
+          }
+        ]
+      }
+    },
+    {
+      "files": ["src/**/*.spec.tsx"],
+      "parserOptions": {
+        "project": ["./tsconfig.spec.json"],
+        "EXPERIMENTAL_useSourceOfProjectReferenceRedirect": true
+      },
+      "extends": [
+        "airbnb-typescript",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking"
+      ],
+      "rules": {
+        "import/no-extraneous-dependencies": [
+          "error",
+          { "devDependencies": ["**/*.spec.tsx"] }
+        ]
+      }
+    }
+  ]
+}
