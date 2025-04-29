@@ -40,5 +40,6 @@ export type Translations = {
     registerButton: string;
     allFieldsRequired: string;
     passwordsDoNotMatch: string;
+    success: string;
   };
 };

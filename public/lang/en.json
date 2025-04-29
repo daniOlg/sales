@@ -30,6 +30,7 @@
     "alreadyRegistered": "Already have an account?",
     "registerButton": "Register",
     "allFieldsRequired": "All fields are required",
-    "passwordsDoNotMatch": "Passwords do not match"
+    "passwordsDoNotMatch": "Passwords do not match",
+    "success": "Registration successful"
   }
 }
