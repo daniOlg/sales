@@ -37,6 +37,7 @@ export function PaginationControls({
     <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-4">
       <div className="flex items-center gap-2 text-sm text-muted-foreground">
         <div>
+          {/* TODO: translations */}
           Showing page
           {' '}
           {currentPage}
@@ -56,6 +57,7 @@ export function PaginationControls({
               <SelectValue placeholder="Rows" />
             </SelectTrigger>
             <SelectContent>
+              {/* TODO: translations */}
               <SelectItem value="5">5 rows</SelectItem>
               <SelectItem value="10">10 rows</SelectItem>
               <SelectItem value="25">25 rows</SelectItem>
@@ -72,6 +74,7 @@ export function PaginationControls({
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}
         >
+          {/* TODO: translations */}
           Previous
         </Button>
         <Input
@@ -88,6 +91,7 @@ export function PaginationControls({
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
         >
+          {/* TODO: translations */}
           Next
         </Button>
       </div>

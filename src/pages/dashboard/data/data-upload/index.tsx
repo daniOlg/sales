@@ -11,19 +11,19 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { DataPreviewTable } from './data-preview-table';
-import { FileUploadSection } from './file-upload-section';
-import { useCSVImport } from './use-csv-import';
+import { DataPreviewTable } from './components/data-preview-table';
+import { FileUploadSection } from './components/file-upload-section';
+import { useCSVImport } from './hooks/use-csv-import';
 
 export interface DataUploadProps {
   onImportComplete?: (data: any[]) => void
   buttonText?: string
   dialogTitle?: string
-  dialogDescription?: string
+  // dialogDescription?: string
   onUpload?: (file: File) => Promise<void>
 }
 
-export function DataUpload({
+function DataUpload({
   onImportComplete,
   onUpload,
   buttonText = 'Import New Data',
@@ -79,6 +79,7 @@ export function DataUpload({
       <DialogContent className="sm:max-w-4xl">
         <DialogHeader>
           <DialogTitle>{dialogTitle}</DialogTitle>
+          {/* TODO: translations */}
           <DialogDescription>
             {step === 'upload'
               ? 'Drag and drop your files here to upload. You can only select files from your computer.'

@@ -1,7 +1,7 @@
 'use client';
 
 import * as Papa from 'papaparse';
-import * as React from 'react';
+import { useCallback, useState } from 'react';
 import { toast } from 'sonner';
 
 type ImportStep = 'upload' | 'preview';
@@ -12,11 +12,11 @@ interface UseCSVImportOptions {
 }
 
 export function useCSVImport(options?: UseCSVImportOptions) {
-  const [files, setFiles] = React.useState<File[]>([]);
-  const [step, setStep] = React.useState<ImportStep>('upload');
-  const [parsedData, setParsedData] = React.useState<any[]>([]);
-  const [headers, setHeaders] = React.useState<string[]>([]);
-  const [parsing, setParsing] = React.useState(false);
+  const [files, setFiles] = useState<File[]>([]);
+  const [step, setStep] = useState<ImportStep>('upload');
+  const [parsedData, setParsedData] = useState<any[]>([]);
+  const [headers, setHeaders] = useState<string[]>([]);
+  const [parsing, setParsing] = useState(false);
 
   const resetState = () => {
     setFiles([]);
@@ -26,7 +26,7 @@ export function useCSVImport(options?: UseCSVImportOptions) {
     setParsing(false);
   };
 
-  const handlePreview = React.useCallback(() => {
+  const handlePreview = useCallback(() => {
     if (!files.length) return;
 
     setParsing(true);
@@ -53,6 +53,7 @@ export function useCSVImport(options?: UseCSVImportOptions) {
 
           setStep('preview');
         } else {
+          // TODO: translations
           toast.error('Failed to parse CSV file or file is empty');
           if (options?.onParseError) {
             options.onParseError(new Error('Failed to parse CSV file or file is empty'));

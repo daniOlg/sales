@@ -44,7 +44,12 @@ export function DataPreviewTable({
           <TableBody>
             {paginatedData.map((row, rowIndex) => (
               <TableRow key={rowIndex}>
-                {Array.isArray(row) && row.map((cell, cellIndex) => <TableCell key={cellIndex}>{cell}</TableCell>)}
+                {Array.isArray(row) && row
+                  .map((cell, cellIndex) => (
+                    <TableCell key={cellIndex}>
+                      {cell}
+                    </TableCell>
+                  ))}
               </TableRow>
             ))}
           </TableBody>
@@ -63,9 +68,11 @@ export function DataPreviewTable({
       <div className="flex justify-between mt-4">
         <Button variant="outline" onClick={onBack} className="flex items-center gap-1">
           <ArrowLeft className="size-4" />
+          {/* TODO: translations */}
           Back
         </Button>
         <Button onClick={onConfirm} disabled={uploading}>
+          {/* TODO: translations */}
           {uploading ? 'Uploading...' : 'Import Data'}
         </Button>
       </div>
