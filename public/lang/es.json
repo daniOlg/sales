@@ -11,11 +11,12 @@
     "password": "Contraseña",
     "passwordPlaceholder": "Ingresa tu contraseña",
     "registerButton": "Registrarse",
+    "notRegistered": "¿No tienes una cuenta?",
     "loginButton": "Iniciar sesión"
   },
   "register": {
     "title": "Crear cuenta",
-    "description": "Completa tus detalles para crear una nueva cuenta.",
+    "description": "Completa los campos para crear una nueva cuenta.",
     "name": "Nombre completo",
     "namePlaceholder": "Ingresa tu nombre completo",
     "email": "Correo electrónico",
@@ -24,7 +25,8 @@
     "passwordPlaceholder": "Crea una contraseña",
     "confirmPassword": "Confirmar contraseña",
     "confirmPasswordPlaceholder": "Confirma tu contraseña",
-    "backToLogin": "Volver a inicio de sesión",
+    "backToLogin": "Iniciar sesión",
+    "alreadyRegistered": "¿Ya tienes una cuenta?",
     "registerButton": "Registrarse"
   }
 }

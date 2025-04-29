@@ -56,11 +56,17 @@ function Login() {
             </div>
           </form>
         </CardContent>
-        <CardFooter className="flex justify-between">
-          <Link to="/register">
-            <Button variant="outline">{t.login.registerButton}</Button>
-          </Link>
-          <Button>{t.login.loginButton}</Button>
+        <CardFooter className="flex flex-col space-y-4">
+          <Button className="w-full">{t.login.loginButton}</Button>
+          <div className="mt-4 text-center text-sm text-muted-foreground">
+            {t.login.notRegistered}
+            {' '}
+            <Link to="/register">
+              <span className="underline underline-offset-4 hover:text-primary">
+                {t.login.registerButton}
+              </span>
+            </Link>
+          </div>
         </CardFooter>
         <BorderBeam
           duration={6}

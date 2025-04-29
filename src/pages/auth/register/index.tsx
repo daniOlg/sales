@@ -76,11 +76,17 @@ function Register() {
             </div>
           </form>
         </CardContent>
-        <CardFooter className="flex justify-between">
-          <Link to="/login">
-            <Button variant="outline">{t.register.backToLogin}</Button>
-          </Link>
-          <Button>{t.register.registerButton}</Button>
+        <CardFooter className="flex flex-col space-y-4">
+          <Button className="w-full">{t.register.registerButton}</Button>
+          <div className="mt-4 text-center text-sm text-muted-foreground">
+            {t.register.alreadyRegistered}
+            {' '}
+            <Link to="/login">
+              <span className="underline underline-offset-4 hover:text-primary">
+                {t.register.backToLogin}
+              </span>
+            </Link>
+          </div>
         </CardFooter>
         <BorderBeam
           duration={6}

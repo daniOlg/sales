@@ -20,6 +20,7 @@ export type Translations = {
     password: string;
     passwordPlaceholder: string;
     registerButton: string;
+    notRegistered: string;
     loginButton: string;
   };
   register: {
@@ -34,6 +35,7 @@ export type Translations = {
     confirmPassword: string;
     confirmPasswordPlaceholder: string;
     backToLogin: string;
+    alreadyRegistered: string;
     registerButton: string;
   };
 };

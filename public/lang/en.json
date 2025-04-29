@@ -11,6 +11,7 @@
     "password": "Password",
     "passwordPlaceholder": "Enter your password",
     "registerButton": "Register",
+    "notRegistered": "Don't have an account?",
     "loginButton": "Login"
   },
   "register": {
@@ -24,7 +25,8 @@
     "passwordPlaceholder": "Create a password",
     "confirmPassword": "Confirm Password",
     "confirmPasswordPlaceholder": "Confirm your password",
-    "backToLogin": "Back to Login",
+    "backToLogin": "Login",
+    "alreadyRegistered": "Already have an account?",
     "registerButton": "Register"
   }
 }
