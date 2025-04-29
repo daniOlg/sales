@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
+import { toast } from 'sonner';
+import { supabase } from '@/clients/supabase';
 import { BorderBeam } from '@/components/magicui/border-beam';
 import { Button } from '@/components/ui/button';
 import {
@@ -18,8 +20,30 @@ import { useTranslations } from '@/services/i18n/hooks/use-translations';
 function Login() {
   const { t } = useTranslations();
 
+  const [loading, setLoading] = useState(false);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  // TODO: Add zod validations
+
+  const handleLogin = async () => {
+    setLoading(true);
+
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      toast.error(error.message);
+    } else {
+      toast.success(t.login.success);
+      // TODO: Redirect to dashboard
+    }
+
+    setLoading(false);
+  };
 
   return (
     <div className="flex h-screen items-center justify-center">
@@ -57,7 +81,13 @@ function Login() {
           </form>
         </CardContent>
         <CardFooter className="flex flex-col space-y-4">
-          <Button className="w-full">{t.login.loginButton}</Button>
+          <Button
+            className="w-full"
+            disabled={loading}
+            onClick={handleLogin}
+          >
+            {t.login.loginButton}
+          </Button>
           <div className="mt-4 text-center text-sm text-muted-foreground">
             {t.login.notRegistered}
             {' '}

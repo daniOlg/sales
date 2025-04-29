@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
+import { toast } from 'sonner';
+import { supabase } from '@/clients/supabase';
 import { BorderBeam } from '@/components/magicui/border-beam';
 import { Button } from '@/components/ui/button';
 import {
@@ -18,10 +20,43 @@ import { useTranslations } from '@/services/i18n/hooks/use-translations';
 function Register() {
   const { t } = useTranslations();
 
-  const [name, setName] = useState('');
+  const [loading, setLoading] = useState(false);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
+  // TODO: Add zod validations
+
+  const handleRegister = async () => {
+    setLoading(true);
+
+    if (!email || !password || !confirmPassword) {
+      toast.error(t.register.allFieldsRequired);
+      setLoading(false);
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      toast.error(t.register.passwordsDoNotMatch);
+      setLoading(false);
+      return;
+    }
+
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
+
+    if (error) {
+      toast.error(error.message);
+    } else {
+      toast.success(t.register.success);
+      // TODO: Redirect to login page
+    }
+
+    setLoading(false);
+  };
 
   return (
     <div className="flex h-screen items-center justify-center">
@@ -35,16 +70,6 @@ function Register() {
         <CardContent>
           <form>
             <div className="grid w-full items-center gap-4">
-              <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="name">{t.register.name}</Label>
-                <Input
-                  id="name"
-                  type="text"
-                  placeholder={t.register.namePlaceholder}
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </div>
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="email">{t.register.email}</Label>
                 <Input
@@ -77,7 +102,13 @@ function Register() {
           </form>
         </CardContent>
         <CardFooter className="flex flex-col space-y-4">
-          <Button className="w-full">{t.register.registerButton}</Button>
+          <Button
+            className="w-full"
+            disabled={loading}
+            onClick={handleRegister}
+          >
+            {t.register.registerButton}
+          </Button>
           <div className="mt-4 text-center text-sm text-muted-foreground">
             {t.register.alreadyRegistered}
             {' '}
