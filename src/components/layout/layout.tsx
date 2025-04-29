@@ -12,6 +12,7 @@ function Layout() {
         {session?.user?.email && (
           <div className="text-sm text-gray-500">
             {session.user.email}
+            {/* TODO: Add logout button */}
           </div>
         )}
         <LangSwitcher />
