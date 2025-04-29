@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   FLUSH, PAUSE, PERSIST, persistStore, PURGE, REGISTER, REHYDRATE,
 } from 'redux-persist';
-import { authReducer } from '@/services/auth/slices/auth-slice';
+import { sessionReducer } from '@/services/auth/slices/session-slice';
 import { i18nListener } from '@/services/i18n/slices/i18n-listeners';
 import { i18nReducer } from '@/services/i18n/slices/i18n-slice';
 import { themeReducer } from '@/services/theme/slices/theme-slice';
@@ -11,7 +11,7 @@ import { themeReducer } from '@/services/theme/slices/theme-slice';
 const rootReducer = {
   i18n: i18nReducer,
   theme: themeReducer,
-  auth: authReducer,
+  session: sessionReducer,
 };
 
 const middlewares = [

@@ -1,10 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router';
-import { toast } from 'sonner';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { z } from 'zod';
-import { supabase } from '@/clients/supabase';
 import { BorderBeam } from '@/components/magicui/border-beam';
 import { Button } from '@/components/ui/button';
 import {
@@ -15,13 +13,25 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { PasswordInput } from '@/components/ui/password-input';
+import { useAuth } from '@/services/auth/hooks/use-auth';
+import { useSession } from '@/services/auth/hooks/use-session';
 import { useTranslations } from '@/services/i18n/hooks/use-translations';
 
 function Login() {
-  const navigate = useNavigate();
   const { t } = useTranslations();
+  const { loading, isAuthenticated } = useSession();
+  const { signInWithPassword } = useAuth();
 
-  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname as string || '/dashboard';
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate(from, { replace: true });
+    }
+  }, [isAuthenticated, navigate, from]);
 
   const LOGIN_FORM_SCHEMA = z.object({
     email: z.string().email({ message: t.login.validation.email }),
@@ -37,21 +47,7 @@ function Login() {
   });
 
   async function onSubmit(values: z.infer<typeof LOGIN_FORM_SCHEMA>) {
-    setLoading(true);
-
-    const { error } = await supabase.auth.signInWithPassword({
-      email: values.email,
-      password: values.password,
-    });
-
-    if (error) {
-      toast.error(error.message);
-    } else {
-      toast.success(t.login.success);
-      navigate('/dashboard');
-    }
-
-    setLoading(false);
+    await signInWithPassword({ email: values.email, password: values.password });
   }
 
   return (
