@@ -1,7 +1,10 @@
 {
-  "oops": "¡Ups!",
-  "pageNotFound": "Se produjo un error al cargar esta página",
-  "goBackToHome": "Volver a inicio",
+  "notFound": {
+    "title": "¡Ups!",
+    "subtitle": "Se produjo un error al cargar esta página",
+    "goBackToHome": "Volver a inicio",
+    "goBackToDashboard": "Volver al tablero"
+  },
   "home": {
     "title": "Inicio",
     "welcome": "Bienvenid@",

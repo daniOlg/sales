@@ -1,7 +1,10 @@
 {
-  "oops": "Oops!",
-  "pageNotFound": "An error occurred while loading this page",
-  "goBackToHome": "Go back to home",
+  "notFound": {
+    "title": "Oops!",
+    "subtitle": "An error occurred while loading this page",
+    "goBackToHome": "Go back to home",
+    "goBackToDashboard": "Go back to dashboard"
+  },
   "home": {
     "title": "Home",
     "welcome": "Welcome",

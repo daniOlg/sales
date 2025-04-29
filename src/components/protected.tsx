@@ -1,18 +1,29 @@
-import { PropsWithChildren, useEffect } from 'react';
-import { useNavigate } from 'react-router';
-import { useAuth } from '@/services/auth/hooks/use-auth';
+import type { ReactNode } from 'react';
+import { Navigate, useLocation } from 'react-router';
+import { useAppSelector } from '@/store/store';
 
-function Protected({ children }: PropsWithChildren) {
-  const { session } = useAuth();
-  const navigate = useNavigate();
+interface ProtectedRouteProps {
+  children: ReactNode
+  redirectTo?: string
+}
 
-  useEffect(() => {
-    if (!session) {
-      navigate('/login');
-    }
-  }, []);
+export function ProtectedRoute({ children, redirectTo = '/login' }: ProtectedRouteProps) {
+  const { isAuthenticated, loading } = useAppSelector((state) => state.session);
+  const location = useLocation();
+
+  if (loading) {
+    return (
+      <div className="flex h-screen w-full items-center justify-center">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to={redirectTo} state={{ from: location }} replace />;
+  }
 
   return children;
 }
 
-export default Protected;
+export default ProtectedRoute;
