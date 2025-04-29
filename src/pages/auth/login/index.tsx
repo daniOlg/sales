@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { toast } from 'sonner';
 import { supabase } from '@/clients/supabase';
 import { BorderBeam } from '@/components/magicui/border-beam';
@@ -18,6 +18,7 @@ import { PasswordInput } from '@/components/ui/password-input';
 import { useTranslations } from '@/services/i18n/hooks/use-translations';
 
 function Login() {
+  const navigate = useNavigate();
   const { t } = useTranslations();
 
   const [loading, setLoading] = useState(false);
@@ -39,7 +40,7 @@ function Login() {
       toast.error(error.message);
     } else {
       toast.success(t.login.success);
-      // TODO: Redirect to dashboard
+      navigate('/');
     }
 
     setLoading(false);
