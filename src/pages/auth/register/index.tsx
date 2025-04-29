@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router';
 import { BorderBeam } from '@/components/magicui/border-beam';
 import { Button } from '@/components/ui/button';
@@ -11,10 +12,16 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { PasswordInput } from '@/components/ui/password-input';
 import { useTranslations } from '@/services/i18n/hooks/use-translations';
 
 function Register() {
   const { t } = useTranslations();
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   return (
     <div className="flex h-screen items-center justify-center">
@@ -34,6 +41,8 @@ function Register() {
                   id="name"
                   type="text"
                   placeholder={t.register.namePlaceholder}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                 />
               </div>
               <div className="flex flex-col space-y-1.5">
@@ -42,22 +51,26 @@ function Register() {
                   id="email"
                   type="email"
                   placeholder={t.register.emailPlaceholder}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="password">{t.register.password}</Label>
-                <Input
+                <PasswordInput
                   id="password"
-                  type="password"
                   placeholder={t.register.passwordPlaceholder}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="confirmPassword">{t.register.confirmPassword}</Label>
-                <Input
+                <PasswordInput
                   id="confirmPassword"
-                  type="password"
                   placeholder={t.register.confirmPasswordPlaceholder}
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                 />
               </div>
             </div>
