@@ -8,10 +8,16 @@ export type I18nState = {
 export type SupportedLangs = Record<string, string>;
 
 export type Translations = {
-  home: string;
   oops: string;
   pageNotFound: string;
   goBackToHome: string;
+  home: {
+    title: string;
+    welcome: string;
+    subtitle: string;
+    loginButton: string;
+    registerButton: string;
+  };
   login: {
     title: string;
     description: string;

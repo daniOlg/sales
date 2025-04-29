@@ -1,8 +1,14 @@
 {
-  "home": "Home",
   "oops": "Oops!",
   "pageNotFound": "An error occurred while loading this page",
   "goBackToHome": "Go back to home",
+  "home": {
+    "title": "Home",
+    "welcome": "Welcome",
+    "subtitle": "Your all-in-one platform to organize sales, manage inventory and boost your business. Simplify your commercial operations and take your company to the next level.",
+    "loginButton": "Login",
+    "registerButton": "Register"
+  },
   "login": {
     "title": "Login",
     "description": "Enter your credentials to access your account.",
