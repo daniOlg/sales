@@ -10,6 +10,8 @@ const LoginPage = lazy(() => import('../pages/auth/login'));
 const RegisterPage = lazy(() => import('../pages/auth/register'));
 
 const DashboardPage = lazy(() => import('../pages/dashboard'));
+const DashboardHomePage = lazy(() => import('../pages/dashboard/home'));
+const DashboardDataPage = lazy(() => import('../pages/dashboard/data'));
 
 export const routesAll: RouteObject[] = [
   {
@@ -45,5 +47,27 @@ export const routesAll: RouteObject[] = [
         </Suspense>
       </Protected>
     ),
+    children: [
+      {
+        index: true,
+        element: (
+          <Protected>
+            <Suspense fallback={<Fallback />}>
+              <DashboardHomePage />
+            </Suspense>
+          </Protected>
+        ),
+      },
+      {
+        path: 'data',
+        element: (
+          <Protected>
+            <Suspense fallback={<Fallback />}>
+              <DashboardDataPage />
+            </Suspense>
+          </Protected>
+        ),
+      },
+    ],
   },
 ];
