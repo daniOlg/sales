@@ -1,10 +1,26 @@
-function Dashboard() {
+import { Separator } from '@/components/ui/separator';
+import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import DashboardSidebar from '@/pages/dashboard/dashboard-sidebar';
+
+export default function Dashboard() {
   return (
-    <div>
-      <h1>Dashboard</h1>
-      <p>Welcome to the dashboard!</p>
-    </div>
+    <SidebarProvider>
+      <DashboardSidebar />
+      <SidebarInset>
+        <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+          <SidebarTrigger className="-ml-1" />
+          <Separator orientation="vertical" className="mr-2 h-4" />
+          <h1 className="text-lg font-semibold">Dashboard</h1>
+        </header>
+        <main className="flex flex-1 flex-col gap-4 p-4">
+          <div className="grid auto-rows-min gap-4 md:grid-cols-3">
+            <div className="aspect-video rounded-xl bg-muted/50" />
+            <div className="aspect-video rounded-xl bg-muted/50" />
+            <div className="aspect-video rounded-xl bg-muted/50" />
+          </div>
+          <div className="min-h-[60vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
+        </main>
+      </SidebarInset>
+    </SidebarProvider>
   );
 }
-
-export default Dashboard;
