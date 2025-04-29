@@ -48,7 +48,7 @@ function Login() {
       toast.error(error.message);
     } else {
       toast.success(t.login.success);
-      navigate('/');
+      navigate('/dashboard');
     }
 
     setLoading(false);
