@@ -44,6 +44,7 @@ function Login() {
                 />
               </div>
               <div className="flex flex-col space-y-1.5">
+                {/* TODO: Add forgot password button/link */}
                 <Label htmlFor="password">{t.login.password}</Label>
                 <PasswordInput
                   id="password"
