@@ -13,7 +13,11 @@
     "registerButton": "Register",
     "notRegistered": "Don't have an account?",
     "loginButton": "Login",
-    "success": "Login successful"
+    "success": "Login successful",
+    "validation": {
+      "email": "Email is required",
+      "passwordMin8": "Password must be at least 8 characters"
+    }
   },
   "register": {
     "title": "Create Account",
@@ -31,6 +35,10 @@
     "registerButton": "Register",
     "allFieldsRequired": "All fields are required",
     "passwordsDoNotMatch": "Passwords do not match",
-    "success": "Registration successful"
+    "success": "Registration successful",
+    "validation": {
+      "email": "Email is required",
+      "passwordMin8": "Password must be at least 8 characters"
+    }
   }
 }

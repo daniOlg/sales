@@ -23,6 +23,10 @@ export type Translations = {
     notRegistered: string;
     loginButton: string;
     success: string;
+    validation: {
+      email: string;
+      passwordMin8: string;
+    }
   };
   register: {
     title: string;
@@ -41,5 +45,10 @@ export type Translations = {
     allFieldsRequired: string;
     passwordsDoNotMatch: string;
     success: string;
+    validation: {
+      email: string;
+      passwordMin8: string;
+      confirmPasswordMin8: string;
+    }
   };
 };

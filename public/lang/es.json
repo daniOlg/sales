@@ -13,7 +13,11 @@
     "registerButton": "Registrarse",
     "notRegistered": "¿No tienes una cuenta?",
     "loginButton": "Iniciar sesión",
-    "success": "Inicio de sesión exitoso"
+    "success": "Inicio de sesión exitoso",
+    "validation": {
+      "email": "El correo electrónico es obligatorio",
+      "passwordMin8": "La contraseña debe tener al menos 8 caracteres"
+      }
   },
   "register": {
     "title": "Crear cuenta",
@@ -31,6 +35,10 @@
     "registerButton": "Registrarse",
     "allFieldsRequired": "Todos los campos son obligatorios",
     "passwordsDoNotMatch": "Las contraseñas no coinciden",
-    "success": "Registro exitoso"
+    "success": "Registro exitoso",
+    "validation": {
+      "email": "El correo electrónico es obligatorio",
+      "passwordMin8": "La contraseña debe tener al menos 8 caracteres"
+    }
   }
 }

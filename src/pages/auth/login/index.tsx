@@ -1,19 +1,19 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router';
 import { toast } from 'sonner';
+import { z } from 'zod';
 import { supabase } from '@/clients/supabase';
 import { BorderBeam } from '@/components/magicui/border-beam';
 import { Button } from '@/components/ui/button';
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
+  Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle,
 } from '@/components/ui/card';
+import {
+  Form, FormControl, FormField, FormItem, FormLabel, FormMessage,
+} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { PasswordInput } from '@/components/ui/password-input';
 import { useTranslations } from '@/services/i18n/hooks/use-translations';
 
@@ -23,17 +23,25 @@ function Login() {
 
   const [loading, setLoading] = useState(false);
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const LOGIN_FORM_SCHEMA = z.object({
+    email: z.string().email({ message: t.login.validation.email }),
+    password: z.string().min(8, { message: t.login.validation.passwordMin8 }),
+  });
 
-  // TODO: Add zod validations
+  const form = useForm<z.infer<typeof LOGIN_FORM_SCHEMA>>({
+    resolver: zodResolver(LOGIN_FORM_SCHEMA),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
 
-  const handleLogin = async () => {
+  async function onSubmit(values: z.infer<typeof LOGIN_FORM_SCHEMA>) {
     setLoading(true);
 
     const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
+      email: values.email,
+      password: values.password,
     });
 
     if (error) {
@@ -44,7 +52,7 @@ function Login() {
     }
 
     setLoading(false);
-  };
+  }
 
   return (
     <div className="flex h-screen items-center justify-center">
@@ -56,39 +64,59 @@ function Login() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
-            <div className="grid w-full items-center gap-4">
-              <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="email">{t.login.email}</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder={t.login.emailPlaceholder}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+              <div className="grid w-full items-center gap-4">
+                <div className="flex flex-col space-y-1.5">
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{t.login.email}</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="email"
+                            placeholder={t.login.emailPlaceholder}
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="flex flex-col space-y-1.5">
+                  {/* TODO: Add forgot password button/link */}
+                  <FormField
+                    control={form.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{t.login.password}</FormLabel>
+                        <FormControl>
+                          <PasswordInput
+                            placeholder={t.login.passwordPlaceholder}
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <Button
+                  className="w-full"
+                  disabled={loading}
+                  type="submit"
+                >
+                  {t.login.loginButton}
+                </Button>
               </div>
-              <div className="flex flex-col space-y-1.5">
-                {/* TODO: Add forgot password button/link */}
-                <Label htmlFor="password">{t.login.password}</Label>
-                <PasswordInput
-                  id="password"
-                  placeholder={t.login.passwordPlaceholder}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-            </div>
-          </form>
+            </form>
+          </Form>
         </CardContent>
         <CardFooter className="flex flex-col space-y-4">
-          <Button
-            className="w-full"
-            disabled={loading}
-            onClick={handleLogin}
-          >
-            {t.login.loginButton}
-          </Button>
           <div className="mt-4 text-center text-sm text-muted-foreground">
             {t.login.notRegistered}
             {' '}

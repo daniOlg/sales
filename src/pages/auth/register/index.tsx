@@ -1,6 +1,9 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router';
 import { toast } from 'sonner';
+import { z } from 'zod';
 import { supabase } from '@/clients/supabase';
 import { BorderBeam } from '@/components/magicui/border-beam';
 import { Button } from '@/components/ui/button';
@@ -12,8 +15,15 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { PasswordInput } from '@/components/ui/password-input';
 import { useTranslations } from '@/services/i18n/hooks/use-translations';
 
@@ -23,30 +33,30 @@ function Register() {
 
   const [loading, setLoading] = useState(false);
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const REGISTER_FORM_SCHEMA = z.object({
+    email: z.string().email({ message: t.register.validation.email }),
+    password: z.string().min(8, { message: t.register.validation.passwordMin8 }),
+    confirmPassword: z.string().min(8, { message: t.register.validation.passwordMin8 }),
+  }).refine((data) => data.password === data.confirmPassword, {
+    message: t.register.passwordsDoNotMatch,
+    path: ['confirmPassword'],
+  });
 
-  // TODO: Add zod validations
+  const form = useForm<z.infer<typeof REGISTER_FORM_SCHEMA>>({
+    resolver: zodResolver(REGISTER_FORM_SCHEMA),
+    defaultValues: {
+      email: '',
+      password: '',
+      confirmPassword: '',
+    },
+  });
 
-  const handleRegister = async () => {
+  async function onSubmit(values: z.infer<typeof REGISTER_FORM_SCHEMA>) {
     setLoading(true);
 
-    if (!email || !password || !confirmPassword) {
-      toast.error(t.register.allFieldsRequired);
-      setLoading(false);
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      toast.error(t.register.passwordsDoNotMatch);
-      setLoading(false);
-      return;
-    }
-
     const { error } = await supabase.auth.signUp({
-      email,
-      password,
+      email: values.email,
+      password: values.password,
     });
 
     if (error) {
@@ -57,7 +67,7 @@ function Register() {
     }
 
     setLoading(false);
-  };
+  }
 
   return (
     <div className="flex h-screen items-center justify-center">
@@ -69,47 +79,68 @@ function Register() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
-            <div className="grid w-full items-center gap-4">
-              <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="email">{t.register.email}</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder={t.register.emailPlaceholder}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-              <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="password">{t.register.password}</Label>
-                <PasswordInput
-                  id="password"
-                  placeholder={t.register.passwordPlaceholder}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-              <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="confirmPassword">{t.register.confirmPassword}</Label>
-                <PasswordInput
-                  id="confirmPassword"
-                  placeholder={t.register.confirmPasswordPlaceholder}
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                />
-              </div>
-            </div>
-          </form>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t.register.email}</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="email"
+                        placeholder={t.register.emailPlaceholder}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t.register.password}</FormLabel>
+                    <FormControl>
+                      <PasswordInput
+                        placeholder={t.register.passwordPlaceholder}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="confirmPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t.register.confirmPassword}</FormLabel>
+                    <FormControl>
+                      <PasswordInput
+                        placeholder={t.register.confirmPasswordPlaceholder}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button
+                className="w-full"
+                disabled={loading}
+                type="submit"
+              >
+                {t.register.registerButton}
+              </Button>
+            </form>
+          </Form>
         </CardContent>
         <CardFooter className="flex flex-col space-y-4">
-          <Button
-            className="w-full"
-            disabled={loading}
-            onClick={handleRegister}
-          >
-            {t.register.registerButton}
-          </Button>
           <div className="mt-4 text-center text-sm text-muted-foreground">
             {t.register.alreadyRegistered}
             {' '}
