@@ -1,5 +1,5 @@
 import { RouteObject } from 'react-router';
-import Layout from '@/components/layout/layout';
+import Layout from '@/components/layout';
 import NotFound from '@/components/not-found';
 import { routesAll } from '@/routes/routes-all';
 

@@ -1,11 +1,15 @@
 import { lazy, Suspense } from 'react';
 import { RouteObject } from 'react-router';
+
 import Fallback from '@/components/fallback';
+import Protected from '@/components/protected';
 
 const HomePage = lazy(() => import('../pages/home'));
 
 const LoginPage = lazy(() => import('../pages/auth/login'));
 const RegisterPage = lazy(() => import('../pages/auth/register'));
+
+const DashboardPage = lazy(() => import('../pages/dashboard'));
 
 export const routesAll: RouteObject[] = [
   {
@@ -30,6 +34,16 @@ export const routesAll: RouteObject[] = [
       <Suspense fallback={<Fallback />}>
         <RegisterPage />
       </Suspense>
+    ),
+  },
+  {
+    path: 'dashboard',
+    element: (
+      <Protected>
+        <Suspense fallback={<Fallback />}>
+          <DashboardPage />
+        </Suspense>
+      </Protected>
     ),
   },
 ];
