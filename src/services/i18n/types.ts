@@ -22,6 +22,7 @@ export type Translations = {
     registerButton: string;
     notRegistered: string;
     loginButton: string;
+    success: string;
   };
   register: {
     title: string;
@@ -37,5 +38,7 @@ export type Translations = {
     backToLogin: string;
     alreadyRegistered: string;
     registerButton: string;
+    allFieldsRequired: string;
+    passwordsDoNotMatch: string;
   };
 };

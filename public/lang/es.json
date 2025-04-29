@@ -12,7 +12,8 @@
     "passwordPlaceholder": "Ingresa tu contraseña",
     "registerButton": "Registrarse",
     "notRegistered": "¿No tienes una cuenta?",
-    "loginButton": "Iniciar sesión"
+    "loginButton": "Iniciar sesión",
+    "success": "Inicio de sesión exitoso"
   },
   "register": {
     "title": "Crear cuenta",
@@ -27,6 +28,8 @@
     "confirmPasswordPlaceholder": "Confirma tu contraseña",
     "backToLogin": "Iniciar sesión",
     "alreadyRegistered": "¿Ya tienes una cuenta?",
-    "registerButton": "Registrarse"
+    "registerButton": "Registrarse",
+    "allFieldsRequired": "Todos los campos son obligatorios",
+    "passwordsDoNotMatch": "Las contraseñas no coinciden"
   }
 }

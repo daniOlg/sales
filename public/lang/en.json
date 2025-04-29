@@ -12,7 +12,8 @@
     "passwordPlaceholder": "Enter your password",
     "registerButton": "Register",
     "notRegistered": "Don't have an account?",
-    "loginButton": "Login"
+    "loginButton": "Login",
+    "success": "Login successful"
   },
   "register": {
     "title": "Create Account",
@@ -27,6 +28,8 @@
     "confirmPasswordPlaceholder": "Confirm your password",
     "backToLogin": "Login",
     "alreadyRegistered": "Already have an account?",
-    "registerButton": "Register"
+    "registerButton": "Register",
+    "allFieldsRequired": "All fields are required",
+    "passwordsDoNotMatch": "Passwords do not match"
   }
 }
