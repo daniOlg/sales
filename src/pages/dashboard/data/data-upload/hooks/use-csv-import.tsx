@@ -46,6 +46,7 @@ export function useCSVImport(options?: UseCSVImportOptions) {
           });
 
           setParsedData(filteredRows);
+          console.log('Parsed data:', filteredRows);
 
           if (options?.onParseComplete) {
             options.onParseComplete(headerRow, filteredRows);
