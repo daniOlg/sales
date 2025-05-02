@@ -1,5 +1,5 @@
 import {
-  FolderClosed, Home,
+  FolderClosed, Home, Settings,
 } from 'lucide-react';
 
 export const menuItems = [
@@ -13,6 +13,25 @@ export const menuItems = [
     title: 'Data',
     icon: FolderClosed,
     url: 'data',
+  },
+  {
+    title: 'Configuration',
+    icon: Settings,
+    url: 'configuration',
+    items: [
+      {
+        title: 'General',
+        url: '/general',
+      },
+      {
+        title: 'Advanced',
+        url: '/advanced',
+      },
+      {
+        title: 'Security',
+        url: '/security',
+      },
+    ],
   },
   // {
   //   title: 'Customers',
