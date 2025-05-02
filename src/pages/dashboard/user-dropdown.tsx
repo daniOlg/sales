@@ -12,7 +12,7 @@ import {
 import { useAuth } from '@/services/auth/hooks/use-auth';
 import { useSession } from '@/services/auth/hooks/use-session';
 
-export function UserDropdown() {
+function UserDropdown() {
   const navigate = useNavigate();
   const { user, loading } = useSession();
   const { signOut } = useAuth();
@@ -22,15 +22,11 @@ export function UserDropdown() {
     return user.email.charAt(0).toUpperCase();
   };
 
-  async function handleLogout() {
-    await signOut();
-  }
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar className="h-8 w-8 cursor-pointer ring-offset-background transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-          <AvatarImage src={user?.user_metadata?.avatar_url || ''} />
+          <AvatarImage src={user?.user_metadata?.avatar_url as string || ''} />
           <AvatarFallback className="bg-primary text-primary-foreground">
             {getUserInitials()}
           </AvatarFallback>
@@ -56,7 +52,7 @@ export function UserDropdown() {
         <DropdownMenuItem
           disabled={loading}
           className="text-destructive focus:text-destructive"
-          onClick={handleLogout}
+          onClick={() => signOut()}
         >
           <LogOut className="mr-2 h-4 w-4" />
           <span>Cerrar sesión</span>
