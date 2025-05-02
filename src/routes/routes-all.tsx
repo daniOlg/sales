@@ -8,6 +8,8 @@ const HomePage = lazy(() => import('../pages/home'));
 
 const LoginPage = lazy(() => import('../pages/auth/login'));
 const RegisterPage = lazy(() => import('../pages/auth/register'));
+const PasswordRecoveryPage = lazy(() => import('../pages/auth/password-recovery'));
+const UpdatePasswordPage = lazy(() => import('../pages/auth/update-password'));
 
 const DashboardPage = lazy(() => import('../pages/dashboard'));
 const DashboardHomePage = lazy(() => import('../pages/dashboard/home'));
@@ -35,6 +37,22 @@ export const routesAll: RouteObject[] = [
     element: (
       <Suspense fallback={<Fallback />}>
         <RegisterPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: 'password-recovery',
+    element: (
+      <Suspense fallback={<Fallback />}>
+        <PasswordRecoveryPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: 'update-password',
+    element: (
+      <Suspense fallback={<Fallback />}>
+        <UpdatePasswordPage />
       </Suspense>
     ),
   },

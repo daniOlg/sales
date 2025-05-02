@@ -18,6 +18,7 @@
     "email": "Correo electrónico",
     "emailPlaceholder": "Ingresa tu correo electrónico",
     "password": "Contraseña",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
     "passwordPlaceholder": "Ingresa tu contraseña",
     "registerButton": "Registrarse",
     "notRegistered": "¿No tienes una cuenta?",
@@ -49,5 +50,33 @@
       "email": "El correo electrónico es obligatorio",
       "passwordMin8": "La contraseña debe tener al menos 8 caracteres"
     }
+  },
+  "passwordRecovery": {
+    "title": "Restablecer Contraseña",
+    "description": "Ingresa tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña.",
+    "emailPlaceholder": "Ingresa tu correo electrónico",
+    "sendButton": "Enviar Enlace",
+    "loadingText": "Enviando...",
+    "checkEmailTitle": "Revisa Tu Correo",
+    "checkEmailDescription": "Te hemos enviado un enlace para restablecer tu contraseña. Por favor revisa tu correo.",
+    "checkSpamNote": "Si no ves el correo en tu bandeja de entrada, revisa tu carpeta de spam.",
+    "tryAgainButton": "Intentar Nuevamente",
+    "rememberPasswordText": "¿Recuerdas tu contraseña?",
+    "backToLoginText": "Iniciar Sesión",
+    "successMessage": "Correo de restablecimiento enviado. Por favor revisa tu bandeja de entrada.",
+    "errorMessage": "Ocurrió un error inesperado"
+  },
+  "updatePassword": {
+    "title": "Actualizar Contraseña",
+    "description": "Crea una nueva contraseña para tu cuenta",
+    "newPasswordLabel": "Nueva Contraseña",
+    "newPasswordPlaceholder": "Ingresa tu nueva contraseña",
+    "updateButton": "Actualizar Contraseña",
+    "loadingText": "Actualizando...",
+    "successMessage": "Contraseña actualizada exitosamente",
+    "errorMessage": "Ocurrió un error inesperado",
+    "rememberPasswordText": "¿Recuerdas tu contraseña?",
+    "backToLoginText": "Volver a Iniciar Sesión",
+    "authRequiredMessage": "Necesitas estar autenticado para actualizar tu contraseña"
   }
 }

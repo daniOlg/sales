@@ -18,6 +18,7 @@
     "email": "Email",
     "emailPlaceholder": "Enter your email",
     "password": "Password",
+    "forgotPassword": "Forgot password?",
     "passwordPlaceholder": "Enter your password",
     "registerButton": "Register",
     "notRegistered": "Don't have an account?",
@@ -49,5 +50,33 @@
       "email": "Email is required",
       "passwordMin8": "Password must be at least 8 characters"
     }
+  },
+  "passwordRecovery": {
+    "title": "Reset Password",
+    "description": "Enter your email address and we'll send you a link to reset your password.",
+    "emailPlaceholder": "Enter your email address",
+    "sendButton": "Send Reset Link",
+    "loadingText": "Sending...",
+    "checkEmailTitle": "Check Your Email",
+    "checkEmailDescription": "We sent you a password reset link. Please check your email.",
+    "checkSpamNote": "If you don't see the email in your inbox, please check your spam folder.",
+    "tryAgainButton": "Try Again",
+    "rememberPasswordText": "Remember your password?",
+    "backToLoginText": "Login",
+    "successMessage": "Password reset email sent. Please check your inbox.",
+    "errorMessage": "An unexpected error occurred"
+  },
+  "updatePassword": {
+    "title": "Update Password",
+    "description": "Create a new password for your account",
+    "newPasswordLabel": "New Password",
+    "newPasswordPlaceholder": "Enter your new password",
+    "updateButton": "Update Password",
+    "loadingText": "Updating...",
+    "successMessage": "Password updated successfully",
+    "errorMessage": "An unexpected error occurred",
+    "rememberPasswordText": "Remember your password?",
+    "backToLoginText": "Back to Login",
+    "authRequiredMessage": "You need to be authenticated to update your password"
   }
 }

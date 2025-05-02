@@ -89,7 +89,12 @@ function Login() {
                     name="password"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t.login.password}</FormLabel>
+                        <div className="flex justify-between">
+                          <FormLabel>{t.login.password}</FormLabel>
+                          <Link to="/password-recovery" className="text-sm text-muted-foreground hover:text-primary">
+                            {t.login.forgotPassword}
+                          </Link>
+                        </div>
                         <FormControl>
                           <PasswordInput
                             placeholder={t.login.passwordPlaceholder}

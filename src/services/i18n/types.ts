@@ -27,6 +27,7 @@ export type Translations = {
     email: string;
     emailPlaceholder: string;
     password: string;
+    forgotPassword: string;
     passwordPlaceholder: string;
     registerButton: string;
     notRegistered: string;
@@ -59,5 +60,33 @@ export type Translations = {
       passwordMin8: string;
       confirmPasswordMin8: string;
     }
+  };
+  passwordRecovery: {
+    title: string;
+    description: string;
+    emailPlaceholder: string;
+    sendButton: string;
+    loadingText: string;
+    checkEmailTitle: string;
+    checkEmailDescription: string;
+    checkSpamNote: string;
+    tryAgainButton: string;
+    rememberPasswordText: string;
+    backToLoginText: string;
+    successMessage: string;
+    errorMessage: string;
+  };
+  updatePassword: {
+    title: string;
+    description: string;
+    newPasswordLabel: string;
+    newPasswordPlaceholder: string;
+    updateButton: string;
+    loadingText: string;
+    successMessage: string;
+    errorMessage: string;
+    rememberPasswordText: string;
+    backToLoginText: string;
+    authRequiredMessage: string;
   };
 };
