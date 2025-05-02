@@ -1,6 +1,7 @@
 import { Package } from 'lucide-react';
 import { ComponentProps } from 'react';
 import { Link, useLocation } from 'react-router';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   Sidebar,
   SidebarContent,
@@ -12,9 +13,16 @@ import {
   SidebarRail,
 } from '@/components/ui/sidebar';
 import { menuItems } from '@/pages/dashboard/dashboard-config';
+import { useSession } from '@/services/auth/hooks/use-session';
 
 function DashboardSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
   const location = useLocation();
+  const { user } = useSession();
+
+  const getUserInitials = () => {
+    if (!user || !user.email) return 'U';
+    return user.email.charAt(0).toUpperCase();
+  };
 
   return (
     <Sidebar {...props}>
@@ -51,10 +59,14 @@ function DashboardSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
       </SidebarContent>
       <SidebarFooter className="border-t border-sidebar-border p-4">
         <div className="flex items-center gap-2">
-          <div className="h-8 w-8 rounded-full bg-muted" />
+          <Avatar className="h-8 w-8 ring-offset-background transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+            <AvatarImage src={user?.user_metadata?.avatar_url as string || ''} />
+            <AvatarFallback className="bg-primary text-primary-foreground">
+              {getUserInitials()}
+            </AvatarFallback>
+          </Avatar>
           <div className="flex flex-col">
-            <span className="text-sm font-medium">User</span>
-            <span className="text-xs text-muted-foreground">user@sample.com</span>
+            <span className="text-xs text-muted-foreground">{user?.email}</span>
           </div>
         </div>
       </SidebarFooter>
