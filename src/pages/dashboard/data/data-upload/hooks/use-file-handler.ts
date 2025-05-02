@@ -1,133 +1,86 @@
-import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
-import { supabase } from '@/clients/supabase';
+import {
+  calculateFileChecksum,
+  deleteFromDatabase,
+  deleteFromStorage,
+  downloadFromStorage,
+  getFileData, uploadToDatabase, uploadToStorage,
+  verifyFileNotUploaded,
+  withToast,
+} from '@/pages/dashboard/data/data-upload/hooks/auxiliar-functions';
 import { useSession } from '@/services/auth/hooks/use-session';
 
 export const useFileHandler = () => {
   const { user } = useSession();
 
-  const handleFileUpload = async (file: File) => {
-    if (!file) return;
-
-    try {
-      if (!user) {
-        toast.error('User not authenticated');
-        return;
-      }
-
-      const fileUuid = uuidv4();
-      const fileExtension = file.name.split('.').pop();
-      const physicalName = `${fileUuid}.${fileExtension}`;
-      const filePath = `csv-uploads/${user.id}/${physicalName}`;
-      const fileSize = file.size;
-
-      const fileChecksum = await new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = async () => {
-          const arrayBuffer = reader.result as ArrayBuffer;
-          const hash = await crypto.subtle.digest('SHA-1', arrayBuffer);
-          const checksum = new Uint8Array(hash);
-          const checksumString = Array.from(checksum)
-            .map((byte) => byte.toString(16).padStart(2, '0'))
-            .join('');
-
-          resolve(checksumString);
-        };
-        reader.onerror = (error) => reject(error);
-        reader.readAsArrayBuffer(file);
-      });
-
-      const { data: existingFiles } = await supabase
-        .from('user_csv_uploads')
-        .select('id, file_name')
-        .eq('user_id', user.id)
-        .eq('checksum', fileChecksum);
-
-      if (existingFiles && existingFiles.length > 0) {
-        // TODO: translations
-        toast.error(`This file has already been uploaded: ${existingFiles[0].file_name}`);
-        return;
-      }
-
-      const { error: storageError } = await supabase.storage
-        .from('csv-uploads')
-        .upload(filePath, file);
-
-      if (storageError) {
-        toast.error('Error uploading file to storage');
-        return;
-      }
-
-      const { data: dbData, error: dbError } = await supabase
-        .from('user_csv_uploads')
-        .insert([{
-          user_id: user.id,
-          file_name: file.name,
-          file_path: filePath,
-          file_size: fileSize,
-          checksum: fileChecksum,
-        }]);
-
-      if (dbData) console.log('dbData', dbData);
-
-      if (dbError) {
-        toast.error('Error uploading file to database');
-        return;
-      }
-
-      toast.success('File uploaded successfully!');
-    } catch (error) {
-      toast.error('An error occurred while uploading the file');
+  const checkAuth = () => {
+    if (!user) {
+      throw new Error('User not authenticated');
     }
   };
 
-  const handleFileDelete = async (fileId: string) => {
-    if (!fileId) return;
+  const uploadFile = async ({ file } : { file: File }): Promise<string> => {
+    if (!file) throw new Error('File is required');
 
-    try {
-      if (!user) {
-        toast.error('User not authenticated');
-        return;
-      }
+    checkAuth();
 
-      const { data: fileData, error: fileError } = await supabase
-        .from('user_csv_uploads')
-        .select('file_path')
-        .eq('id', fileId)
-        .single();
+    const fileUuid = uuidv4();
+    const fileExtension = file.name.split('.').pop();
+    const physicalName = `${fileUuid}.${fileExtension}`;
+    const filePath = `csv-uploads/${user!.id}/${physicalName}`;
+    const fileSize = file.size;
 
-      if (fileError || !fileData) {
-        toast.error('Error fetching file data');
-        return;
-      }
+    const fileChecksum = await calculateFileChecksum(file);
+    await verifyFileNotUploaded(user!.id, fileChecksum);
+    await uploadToStorage(file, filePath);
 
-      const { error: deleteError } = await supabase.storage
-        .from('csv-uploads')
-        .remove([fileData.file_path as string]);
+    await uploadToDatabase({
+      userId: user!.id,
+      fileName: file.name,
+      filePath,
+      fileSize,
+      fileChecksum,
+    });
 
-      if (deleteError) {
-        toast.error('Error deleting file from storage');
-        return;
-      }
+    return 'File uploaded successfully';
+  };
 
-      const { error: dbDeleteError } = await supabase
-        .from('user_csv_uploads')
-        .delete()
-        .eq('id', fileId);
+  const deleteFile = async ({ fileId }: { fileId: string }): Promise<string> => {
+    checkAuth();
 
-      if (dbDeleteError) {
-        toast.error('Error deleting file from database');
-        return;
-      }
+    if (!fileId) throw new Error('File ID is required');
 
-      toast.success('File deleted successfully!');
-    } catch (error) {
-      toast.error('An error occurred while deleting the file');
-    }
+    const fileData = await getFileData(fileId);
+    await deleteFromStorage(fileData.file_path);
+    await deleteFromDatabase(fileData.id);
+
+    return 'File deleted successfully';
+  };
+
+  const downloadFile = async ({ fileId }: { fileId: string }): Promise<string> => {
+    checkAuth();
+
+    if (!fileId) throw new Error('File ID is required');
+
+    await new Promise((resolve) => { setTimeout(resolve, 1000); });
+
+    const fileData = await getFileData(fileId);
+    const file = await downloadFromStorage(fileData.file_path);
+
+    const url = URL.createObjectURL(file);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileData.file_name || 'download';
+    document.body.appendChild(a);
+    a.click();
+    URL.revokeObjectURL(url);
+    a.remove();
+    return `File downloaded successfully: ${fileData.file_name}`;
   };
 
   return {
-    handleFileUpload,
-    handleFileDelete,
+    handleFileUpload: withToast<Parameters<typeof uploadFile>[0]>(uploadFile, 'Uploading file...'),
+    handleFileDelete: withToast<Parameters<typeof deleteFile>[0]>(deleteFile, 'Deleting file...'),
+    handleFileDownload: withToast<Parameters<typeof downloadFile>[0]>(downloadFile, 'Downloading file...'),
   };
 };

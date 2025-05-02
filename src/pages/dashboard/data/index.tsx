@@ -17,17 +17,18 @@ import DataUpload from '@/pages/dashboard/data/data-upload';
 import { useFileHandler } from '@/pages/dashboard/data/data-upload/hooks/use-file-handler';
 import { useSession } from '@/services/auth/hooks/use-session';
 
-type UploadedFile = {
+export type UploadedFile = {
   id: string;
   file_name: string;
   file_path: string;
   file_size: number;
+  checksum: string;
   uploaded_at: string;
 };
 
 function Data() {
   const { user } = useSession();
-  const { handleFileUpload, handleFileDelete } = useFileHandler();
+  const { handleFileUpload, handleFileDelete, handleFileDownload } = useFileHandler();
 
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
   const [loading, setLoading] = useState(true);
@@ -37,7 +38,7 @@ function Data() {
     try {
       const { data } = await supabase
         .from('user_csv_uploads')
-        .select('id, file_name, file_path, file_size, uploaded_at')
+        .select('id, file_name, file_path, file_size, checksum, uploaded_at')
         .eq('user_id', user?.id)
         .order('uploaded_at', { ascending: false });
 
@@ -54,13 +55,17 @@ function Data() {
   }, []);
 
   const deleteFile = async (fileId: string) => {
-    await handleFileDelete(fileId);
+    await handleFileDelete({ fileId });
     await reloadFiles();
   };
 
   const uploadFile = async (file: File) => {
-    await handleFileUpload(file);
+    await handleFileUpload({ file });
     await reloadFiles();
+  };
+
+  const downloadFile = async (fileId: string) => {
+    await handleFileDownload({ fileId });
   };
 
   return (
@@ -121,7 +126,11 @@ function Data() {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" className="w-32">
-                      <DropdownMenuItem>Download</DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={() => downloadFile(file.id)}
+                      >
+                        Download
+                      </DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem
                         className="text-destructive"
