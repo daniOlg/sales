@@ -15,16 +15,11 @@ import {
 } from '@/components/ui/table';
 import DataUpload from '@/pages/dashboard/data/data-upload';
 import { useFileHandler } from '@/pages/dashboard/data/data-upload/hooks/use-file-handler';
+import { UploadedFile } from '@/pages/dashboard/data/data-upload/types';
+import LoadingSkeleton from '@/pages/dashboard/data/loading-skeleton';
 import { useSession } from '@/services/auth/hooks/use-session';
-
-export type UploadedFile = {
-  id: string;
-  file_name: string;
-  file_path: string;
-  file_size: number;
-  checksum: string;
-  uploaded_at: string;
-};
+import { formatDate } from '@/utils/date';
+import { roundFileSize } from '@/utils/file';
 
 function Data() {
   const { user } = useSession();
@@ -81,69 +76,63 @@ function Data() {
             <TableHead>
               File Name
             </TableHead>
-            <TableHead>
+            <TableHead className="w-[100px]">
               File Size
             </TableHead>
-            <TableHead>
-              Created At
+            <TableHead className="w-[200px]">
+              Uploaded At
             </TableHead>
-            <TableHead>
+            <TableHead className="w-[100px]">
               Actions
             </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {loading ? (
-            <TableRow>
-              <TableCell>
-                Loading...
-              </TableCell>
-            </TableRow>
-          ) : (
-            uploadedFiles.map((file) => (
-              <TableRow key={file.id}>
-                <TableCell>
-                  {file.file_name}
-                </TableCell>
-                <TableCell>
-                  {Math.round(file.file_size / 1024)}
-                  {' '}
-                  KB
-                </TableCell>
-                <TableCell>
-                  {new Date(file.uploaded_at).toLocaleDateString()}
-                </TableCell>
-                <TableCell>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        className="flex size-8 text-muted-foreground data-[state=open]:bg-muted"
-                        size="icon"
-                      >
-                        <MoreVerticalIcon />
-                        <span className="sr-only">Open menu</span>
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="w-32">
-                      <DropdownMenuItem
-                        onClick={() => downloadFile(file.id)}
-                      >
-                        Download
-                      </DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem
-                        className="text-destructive"
-                        onClick={() => deleteFile(file.id)}
-                      >
-                        Delete
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </TableCell>
-              </TableRow>
-            ))
-          )}
+          {loading
+            ? <LoadingSkeleton />
+            : (
+              uploadedFiles.map((file) => (
+                <TableRow key={file.id}>
+                  <TableCell>
+                    {file.file_name}
+                  </TableCell>
+                  <TableCell>
+                    {roundFileSize(file.file_size)}
+                  </TableCell>
+                  <TableCell>
+                    {formatDate(file.uploaded_at)}
+                  </TableCell>
+                  <TableCell>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          className="flex size-8 text-muted-foreground data-[state=open]:bg-muted"
+                          size="icon"
+                        >
+                          <MoreVerticalIcon />
+                          <span className="sr-only">Open menu</span>
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end" className="w-32">
+                        <DropdownMenuItem
+                          onClick={() => downloadFile(file.id)}
+                        >
+                          Download
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                          className="text-destructive"
+                          onClick={() => deleteFile(file.id)}
+                        >
+                          Delete
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
         </TableBody>
       </Table>
     </>

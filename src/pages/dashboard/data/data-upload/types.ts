@@ -1,15 +1,8 @@
-export interface CSVData {
-  headers: string[]
-  rows: any[][]
-}
-
-export interface FileUploadProgress {
-  file: File
-  progress: number
-}
-
-export interface ImportResult {
-  success: boolean
-  data?: any[]
-  error?: string
-}
+export type UploadedFile = {
+  id: string;
+  file_name: string;
+  file_path: string;
+  file_size: number;
+  checksum: string;
+  uploaded_at: string;
+};

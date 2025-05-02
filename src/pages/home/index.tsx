@@ -1,9 +1,19 @@
-import { Link } from 'react-router';
+import { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router';
 import { Button } from '@/components/ui/button';
+import { useSession } from '@/services/auth/hooks/use-session';
 import { useTranslations } from '@/services/i18n/hooks/use-translations';
 
 function Home() {
   const { t } = useTranslations();
+  const navigate = useNavigate();
+  const { isAuthenticated } = useSession();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/dashboard', { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-background p-4 text-center">
