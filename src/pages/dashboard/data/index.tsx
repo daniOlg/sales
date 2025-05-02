@@ -95,9 +95,6 @@ function Data() {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">
-              ID
-            </TableHead>
             <TableHead>
               File Name
             </TableHead>
@@ -118,9 +115,6 @@ function Data() {
             : (
               uploadedFiles.map((file) => (
                 <TableRow key={file.id}>
-                  <TableCell>
-                    {file.id}
-                  </TableCell>
                   <TableCell>
                     {file.file_name}
                   </TableCell>
