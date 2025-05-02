@@ -79,6 +79,7 @@ function Data() {
     if (!file) throw new Error('File not found');
 
     const csvData = await parseCsvFile(file);
+
     setFileName(fileData.file_name);
     setCsv(csvData);
     setLoadingCsv(false);
