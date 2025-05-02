@@ -62,8 +62,6 @@ export const useFileHandler = () => {
 
     if (!fileId) throw new Error('File ID is required');
 
-    await new Promise((resolve) => { setTimeout(resolve, 1000); });
-
     const fileData = await getFileData(fileId);
     const file = await downloadFromStorage(fileData.file_path);
 
