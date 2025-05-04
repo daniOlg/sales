@@ -1,8 +1,8 @@
 import { Outlet } from 'react-router';
 import { Separator } from '@/components/ui/separator';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
-import { LangSwitcher } from '@/features/lang-switcher/lang-switcher';
-import { ThemeSwitcher } from '@/features/theme-switcher/theme-switcher';
+import { LangSwitcher } from '@/features/lang/components/lang-switcher';
+import { ThemeSwitcher } from '@/features/theme/components/theme-switcher';
 import DashboardSidebar from '@/pages/dashboard/dashboard-sidebar';
 import UserDropdown from '@/pages/dashboard/user-dropdown';
 

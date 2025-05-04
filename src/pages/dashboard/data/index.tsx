@@ -13,13 +13,13 @@ import {
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from '@/components/ui/table';
+import { useSession } from '@/features/auth/hooks/use-session';
 import CSVPreviewModal from '@/pages/dashboard/data/csv-preview-modal';
 import DataUpload from '@/pages/dashboard/data/data-upload';
 import { downloadFromStorage, getFileData } from '@/pages/dashboard/data/data-upload/hooks/auxiliar-functions';
 import { useFileHandler } from '@/pages/dashboard/data/data-upload/hooks/use-file-handler';
 import { UploadedFile } from '@/pages/dashboard/data/data-upload/types';
 import LoadingSkeleton from '@/pages/dashboard/data/loading-skeleton';
-import { useSession } from '@/services/auth/hooks/use-session';
 import { formatDate } from '@/utils/date';
 import { CSV, parseCsvFile, roundFileSize } from '@/utils/file';
 

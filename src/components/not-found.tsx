@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
-import { useSession } from '@/services/auth/hooks/use-session';
-import { useTranslations } from '@/services/i18n/hooks/use-translations';
+import { useSession } from '@/features/auth/hooks/use-session';
+import { useTranslations } from '@/features/lang/hooks/use-translations';
 
 function NotFound() {
   const { t } = useTranslations();

@@ -1,4 +1,4 @@
-import { setTheme } from '@/services/theme/slices/theme-slice';
+import { setTheme } from '@/store/slices/theme-slice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 export const useTheme = () => {

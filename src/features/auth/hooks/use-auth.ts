@@ -1,5 +1,5 @@
 import { supabase } from '@/clients/supabase';
-import { useSession } from '@/services/auth/hooks/use-session';
+import { useSession } from '@/features/auth/hooks/use-session';
 
 export const useAuth = () => {
   const {

@@ -2,8 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import { defaultLang, supportedLangs } from '@/config/i18n';
 import { basePersistCfg } from '@/config/persistence';
-import { fetchTranslations } from '@/services/i18n/slices/i18n-promises';
 import { I18nState } from '@/services/i18n/types';
+import { fetchTranslations } from '@/store/promises/i18n-promises';
 
 const initialState: I18nState = {
   status: 'loading',

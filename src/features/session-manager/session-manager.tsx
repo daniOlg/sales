@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useAuth } from '@/services/auth/hooks/use-auth';
+import { useAuth } from '@/features/auth/hooks/use-auth';
 
 function App() {
   const { initializeAuth } = useAuth();

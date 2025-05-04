@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useTheme } from '@/services/theme/hooks/use-theme';
+import { useTheme } from '@/features/theme/hooks/use-theme';
 
 function Theme() {
   const { theme } = useTheme();

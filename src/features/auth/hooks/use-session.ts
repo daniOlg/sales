@@ -1,7 +1,7 @@
 import { Session, User } from '@supabase/supabase-js';
 import {
   clearSession, setError, setLoading, setSession, setUser,
-} from '@/services/auth/slices/session-slice';
+} from '@/store/slices/session-slice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 
 export const useSession = () => {

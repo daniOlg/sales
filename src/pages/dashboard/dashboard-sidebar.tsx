@@ -16,8 +16,8 @@ import {
   SidebarMenuSubItem,
   SidebarRail,
 } from '@/components/ui/sidebar';
+import { useSession } from '@/features/auth/hooks/use-session';
 import { menuItems } from '@/pages/dashboard/dashboard-config';
-import { useSession } from '@/services/auth/hooks/use-session';
 
 function DashboardSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
   const { pathname } = useLocation();

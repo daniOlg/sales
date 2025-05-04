@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { Button } from '@/components/ui/button';
-import { useSession } from '@/services/auth/hooks/use-session';
-import { useTranslations } from '@/services/i18n/hooks/use-translations';
+import { useSession } from '@/features/auth/hooks/use-session';
+import { useTranslations } from '@/features/lang/hooks/use-translations';
 
 function Home() {
   const { t } = useTranslations();

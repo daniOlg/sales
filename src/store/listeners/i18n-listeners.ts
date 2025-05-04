@@ -1,6 +1,6 @@
 import { createListenerMiddleware } from '@reduxjs/toolkit';
-import { fetchTranslations } from '@/services/i18n/slices/i18n-promises';
-import { setLang } from '@/services/i18n/slices/i18n-slice';
+import { fetchTranslations } from '@/store/promises/i18n-promises';
+import { setLang } from '@/store/slices/i18n-slice';
 
 const i18nListener = createListenerMiddleware();
 

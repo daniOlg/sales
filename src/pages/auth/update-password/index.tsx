@@ -16,8 +16,8 @@ import {
   Form, FormControl, FormField, FormItem, FormLabel, FormMessage,
 } from '@/components/ui/form';
 import { PasswordInput } from '@/components/ui/password-input';
-import { useSession } from '@/services/auth/hooks/use-session';
-import { useTranslations } from '@/services/i18n/hooks/use-translations';
+import { useSession } from '@/features/auth/hooks/use-session';
+import { useTranslations } from '@/features/lang/hooks/use-translations';
 
 function UpdatePassword() {
   const { t } = useTranslations();

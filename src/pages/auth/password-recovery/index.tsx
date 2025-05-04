@@ -16,7 +16,7 @@ import {
   Form, FormControl, FormField, FormItem, FormLabel, FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { useTranslations } from '@/services/i18n/hooks/use-translations';
+import { useTranslations } from '@/features/lang/hooks/use-translations';
 
 function PasswordRecovery() {
   const { t } = useTranslations();

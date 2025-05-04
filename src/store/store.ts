@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   FLUSH, PAUSE, PERSIST, persistStore, PURGE, REGISTER, REHYDRATE,
 } from 'redux-persist';
-import { sessionReducer } from '@/services/auth/slices/session-slice';
-import { i18nListener } from '@/services/i18n/slices/i18n-listeners';
-import { i18nReducer } from '@/services/i18n/slices/i18n-slice';
-import { themeReducer } from '@/services/theme/slices/theme-slice';
+import { i18nListener } from '@/store/listeners/i18n-listeners';
+import { i18nReducer } from '@/store/slices/i18n-slice';
+import { sessionReducer } from '@/store/slices/session-slice';
+import { themeReducer } from '@/store/slices/theme-slice';
 
 const rootReducer = {
   i18n: i18nReducer,

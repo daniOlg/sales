@@ -13,9 +13,9 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { PasswordInput } from '@/components/ui/password-input';
-import { useAuth } from '@/services/auth/hooks/use-auth';
-import { useSession } from '@/services/auth/hooks/use-session';
-import { useTranslations } from '@/services/i18n/hooks/use-translations';
+import { useAuth } from '@/features/auth/hooks/use-auth';
+import { useSession } from '@/features/auth/hooks/use-session';
+import { useTranslations } from '@/features/lang/hooks/use-translations';
 
 function Login() {
   const { t } = useTranslations();

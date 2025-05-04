@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router';
-import { LangSwitcher } from '@/features/lang-switcher/lang-switcher';
-import { ThemeSwitcher } from '@/features/theme-switcher/theme-switcher';
-import { useSession } from '@/services/auth/hooks/use-session';
+import { useSession } from '@/features/auth/hooks/use-session';
+import { LangSwitcher } from '@/features/lang/components/lang-switcher';
+import { ThemeSwitcher } from '@/features/theme/components/theme-switcher';
 
 function Layout() {
   const { user } = useSession();

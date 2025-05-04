@@ -9,8 +9,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { useAuth } from '@/services/auth/hooks/use-auth';
-import { useSession } from '@/services/auth/hooks/use-session';
+import { useAuth } from '@/features/auth/hooks/use-auth';
+import { useSession } from '@/features/auth/hooks/use-session';
 
 function UserDropdown() {
   const navigate = useNavigate();

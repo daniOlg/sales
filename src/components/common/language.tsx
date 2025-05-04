@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useTranslations } from '@/services/i18n/hooks/use-translations';
+import { useTranslations } from '@/features/lang/hooks/use-translations';
 
 function Language() {
   const { init } = useTranslations();

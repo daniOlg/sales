@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import { useSession } from '@/features/auth/hooks/use-session';
 import {
   calculateFileChecksum,
   deleteFromDatabase,
@@ -8,7 +9,6 @@ import {
   verifyFileNotUploaded,
   withToast,
 } from '@/pages/dashboard/data/data-upload/hooks/auxiliar-functions';
-import { useSession } from '@/services/auth/hooks/use-session';
 
 export const useFileHandler = () => {
   const { user } = useSession();
