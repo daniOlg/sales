@@ -65,28 +65,6 @@ export async function getFileData(fileId: string) {
   return dbFile as DbFile;
 }
 
-export async function downloadFromStorage(filePath: string) {
-  const { data, error: downloadError } = await client.storage
-    .from('csv-uploads')
-    .download(filePath);
-
-  if (downloadError || !data) {
-    throw new Error('Error downloading file');
-  }
-
-  return data;
-}
-
-export async function deleteFromStorage(filePath: string) {
-  const { error: deleteError } = await client.storage
-    .from('csv-uploads')
-    .remove([filePath]);
-
-  if (deleteError) {
-    throw new Error('Error deleting file from storage');
-  }
-}
-
 export async function deleteFromDatabase(fileId: string) {
   const { error: dbDeleteError } = await client
     .from('user_csv_uploads')
@@ -95,35 +73,5 @@ export async function deleteFromDatabase(fileId: string) {
 
   if (dbDeleteError) {
     throw new Error('Error deleting file from database');
-  }
-}
-
-export async function uploadToStorage(file: File, filePath: string) {
-  const { error: storageError } = await client.storage
-    .from('csv-uploads')
-    .upload(filePath, file);
-
-  if (storageError) {
-    throw new Error('Error uploading file to storage');
-  }
-}
-
-export async function uploadToDatabase({
-  userId, fileName, filePath, fileSize, fileChecksum,
-}: {
-  userId: string, fileName: string, filePath: string, fileSize: number, fileChecksum: string;
-}) {
-  const { error: dbError } = await client
-    .from('user_csv_uploads')
-    .insert([{
-      user_id: userId,
-      file_name: fileName,
-      file_path: filePath,
-      file_size: fileSize,
-      checksum: fileChecksum,
-    }]);
-
-  if (dbError) {
-    throw new Error('Error uploading file to database');
   }
 }

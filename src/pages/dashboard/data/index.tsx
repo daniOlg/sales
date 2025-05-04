@@ -2,6 +2,7 @@ import { MoreVerticalIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { client } from '@/api/supabase/client';
+import { StorageApi } from '@/api/supabase/storage.api';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -16,7 +17,7 @@ import {
 import { useSession } from '@/features/auth/hooks/use-session';
 import CSVPreviewModal from '@/pages/dashboard/data/csv-preview-modal';
 import DataUpload from '@/pages/dashboard/data/data-upload';
-import { downloadFromStorage, getFileData } from '@/pages/dashboard/data/data-upload/hooks/auxiliar-functions';
+import { getFileData } from '@/pages/dashboard/data/data-upload/hooks/auxiliar-functions';
 import { useFileHandler } from '@/pages/dashboard/data/data-upload/hooks/use-file-handler';
 import { UploadedFile } from '@/pages/dashboard/data/data-upload/types';
 import LoadingSkeleton from '@/pages/dashboard/data/loading-skeleton';
@@ -74,7 +75,10 @@ function Data() {
     setOpen(true);
     setLoadingCsv(true);
     const fileData = await getFileData(fileId);
-    const file = await downloadFromStorage(fileData.file_path);
+    const file = await StorageApi.downloadFile({
+      bucket: 'csv-uploads',
+      path: fileData.file_path,
+    });
 
     if (!file) throw new Error('File not found');
 

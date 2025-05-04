@@ -1,11 +1,11 @@
 import { v4 as uuidv4 } from 'uuid';
+import { DatabaseApi } from '@/api/supabase/database.api';
+import { StorageApi } from '@/api/supabase/storage.api';
 import { useSession } from '@/features/auth/hooks/use-session';
 import {
   calculateFileChecksum,
   deleteFromDatabase,
-  deleteFromStorage,
-  downloadFromStorage,
-  getFileData, uploadToDatabase, uploadToStorage,
+  getFileData,
   verifyFileNotUploaded,
   withToast,
 } from '@/pages/dashboard/data/data-upload/hooks/auxiliar-functions';
@@ -27,19 +27,24 @@ export const useFileHandler = () => {
     const fileUuid = uuidv4();
     const fileExtension = file.name.split('.').pop();
     const physicalName = `${fileUuid}.${fileExtension}`;
-    const filePath = `csv-uploads/${user!.id}/${physicalName}`;
+    const bucket = 'csv-uploads';
+    const path = `${bucket}/${user!.id}/${physicalName}`;
     const fileSize = file.size;
 
     const fileChecksum = await calculateFileChecksum(file);
     await verifyFileNotUploaded(user!.id, fileChecksum);
-    await uploadToStorage(file, filePath);
 
-    await uploadToDatabase({
-      userId: user!.id,
-      fileName: file.name,
-      filePath,
-      fileSize,
-      fileChecksum,
+    await StorageApi.uploadFile({ file, bucket, path });
+
+    await DatabaseApi.insertToDatabase({
+      table: 'user_csv_uploads',
+      data: {
+        user_id: user!.id,
+        file_name: file.name,
+        file_path: path,
+        file_size: fileSize,
+        file_checksum: fileChecksum,
+      },
     });
 
     return 'File uploaded successfully';
@@ -51,7 +56,10 @@ export const useFileHandler = () => {
     if (!fileId) throw new Error('File ID is required');
 
     const fileData = await getFileData(fileId);
-    await deleteFromStorage(fileData.file_path);
+    await StorageApi.deleteFile({
+      bucket: 'csv-uploads',
+      path: fileData.file_path,
+    });
     await deleteFromDatabase(fileData.id);
 
     return 'File deleted successfully';
@@ -63,7 +71,10 @@ export const useFileHandler = () => {
     if (!fileId) throw new Error('File ID is required');
 
     const fileData = await getFileData(fileId);
-    const file = await downloadFromStorage(fileData.file_path);
+    const file = await StorageApi.downloadFile({
+      bucket: 'csv-uploads',
+      path: fileData.file_path,
+    });
 
     const url = URL.createObjectURL(file);
     const a = document.createElement('a');
