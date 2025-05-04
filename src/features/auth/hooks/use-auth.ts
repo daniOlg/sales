@@ -1,4 +1,4 @@
-import { client } from '@/api/supabase/client';
+import { AuthApi } from '@/api/supabase/auth.api';
 import { useSession } from '@/features/auth/hooks/use-session';
 
 export const useAuth = () => {
@@ -10,20 +10,13 @@ export const useAuth = () => {
     try {
       setLoading(true);
 
-      const {
-        data: { session },
-        error,
-      } = await client.auth.getSession();
-
-      if (error) {
-        throw error;
-      }
+      const session = await AuthApi.getSession();
 
       if (session) {
         setSession(session);
       }
 
-      client.auth.onAuthStateChange((_event, _session) => {
+      AuthApi.onAuthStateChange((_, _session) => {
         setSession(_session);
       });
     } catch (error) {
@@ -42,24 +35,13 @@ export const useAuth = () => {
       setLoading(true);
       setError(null);
 
-      const { data, error } = await client.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      if (error) {
-        throw error;
-      }
+      const data = await AuthApi.signInWithPassword({ email, password });
 
       setSession(data.session);
 
       return data;
     } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      } else {
-        setError('SIGN IN ERROR');
-      }
+      setError((error as Error).message);
       return null;
     } finally {
       setLoading(false);
@@ -71,24 +53,16 @@ export const useAuth = () => {
       setLoading(true);
       setError(null);
 
-      const { data, error } = await client.auth.signUp({
+      const data = await AuthApi.signUp({
         email,
         password,
       });
-
-      if (error) {
-        throw error;
-      }
 
       setSession(data.session);
 
       return data;
     } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      } else {
-        setError('SIGN UP ERROR');
-      }
+      setError((error as Error).message);
       return null;
     } finally {
       setLoading(false);
@@ -99,19 +73,11 @@ export const useAuth = () => {
     try {
       setLoading(true);
 
-      const { error } = await client.auth.signOut();
-
-      if (error) {
-        throw error;
-      }
+      await AuthApi.signOut();
 
       clearSession();
     } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      } else {
-        setError('SIGN OUT ERROR');
-      }
+      setError((error as Error).message);
     } finally {
       setLoading(false);
     }
