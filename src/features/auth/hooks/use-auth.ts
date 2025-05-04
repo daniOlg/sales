@@ -1,4 +1,4 @@
-import { supabase } from '@/clients/supabase';
+import { client } from '@/api/supabase/client';
 import { useSession } from '@/features/auth/hooks/use-session';
 
 export const useAuth = () => {
@@ -13,7 +13,7 @@ export const useAuth = () => {
       const {
         data: { session },
         error,
-      } = await supabase.auth.getSession();
+      } = await client.auth.getSession();
 
       if (error) {
         throw error;
@@ -23,7 +23,7 @@ export const useAuth = () => {
         setSession(session);
       }
 
-      supabase.auth.onAuthStateChange((_event, _session) => {
+      client.auth.onAuthStateChange((_event, _session) => {
         setSession(_session);
       });
     } catch (error) {
@@ -42,7 +42,7 @@ export const useAuth = () => {
       setLoading(true);
       setError(null);
 
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await client.auth.signInWithPassword({
         email,
         password,
       });
@@ -71,7 +71,7 @@ export const useAuth = () => {
       setLoading(true);
       setError(null);
 
-      const { data, error } = await supabase.auth.signUp({
+      const { data, error } = await client.auth.signUp({
         email,
         password,
       });
@@ -99,7 +99,7 @@ export const useAuth = () => {
     try {
       setLoading(true);
 
-      const { error } = await supabase.auth.signOut();
+      const { error } = await client.auth.signOut();
 
       if (error) {
         throw error;

@@ -1,7 +1,7 @@
 import { MoreVerticalIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import { supabase } from '@/clients/supabase';
+import { client } from '@/api/supabase/client';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -38,7 +38,7 @@ function Data() {
   const reloadFiles = async () => {
     setLoading(true);
     try {
-      const { data } = await supabase
+      const { data } = await client
         .from('user_csv_uploads')
         .select('id, file_name, file_path, file_size, checksum, uploaded_at')
         .eq('user_id', user?.id)

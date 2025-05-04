@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router';
 import { toast } from 'sonner';
 import { z } from 'zod';
-import { supabase } from '@/clients/supabase';
+import { client } from '@/api/supabase/client';
 import { BorderBeam } from '@/components/magicui/border-beam';
 import { Button } from '@/components/ui/button';
 import {
@@ -54,7 +54,7 @@ function Register() {
   async function onSubmit(values: z.infer<typeof REGISTER_FORM_SCHEMA>) {
     setLoading(true);
 
-    const { error } = await supabase.auth.signUp({
+    const { error } = await client.auth.signUp({
       email: values.email,
       password: values.password,
     });

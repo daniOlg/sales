@@ -1,5 +1,5 @@
 import { toast } from 'sonner';
-import { supabase } from '@/clients/supabase';
+import { client } from '@/api/supabase/client';
 
 export type DbFile = {
   id: string;
@@ -40,7 +40,7 @@ export async function calculateFileChecksum(file: File): Promise<string> {
 }
 
 export async function verifyFileNotUploaded(userId: string, checksum: string) {
-  const { data: existingFiles } = await supabase
+  const { data: existingFiles } = await client
     .from('user_csv_uploads')
     .select('id, file_name')
     .eq('user_id', userId)
@@ -52,7 +52,7 @@ export async function verifyFileNotUploaded(userId: string, checksum: string) {
 }
 
 export async function getFileData(fileId: string) {
-  const { data: dbFile, error: fileError } = await supabase
+  const { data: dbFile, error: fileError } = await client
     .from('user_csv_uploads')
     .select('id, file_name, file_path, file_size, checksum, uploaded_at')
     .eq('id', fileId)
@@ -66,7 +66,7 @@ export async function getFileData(fileId: string) {
 }
 
 export async function downloadFromStorage(filePath: string) {
-  const { data, error: downloadError } = await supabase.storage
+  const { data, error: downloadError } = await client.storage
     .from('csv-uploads')
     .download(filePath);
 
@@ -78,7 +78,7 @@ export async function downloadFromStorage(filePath: string) {
 }
 
 export async function deleteFromStorage(filePath: string) {
-  const { error: deleteError } = await supabase.storage
+  const { error: deleteError } = await client.storage
     .from('csv-uploads')
     .remove([filePath]);
 
@@ -88,7 +88,7 @@ export async function deleteFromStorage(filePath: string) {
 }
 
 export async function deleteFromDatabase(fileId: string) {
-  const { error: dbDeleteError } = await supabase
+  const { error: dbDeleteError } = await client
     .from('user_csv_uploads')
     .delete()
     .eq('id', fileId);
@@ -99,7 +99,7 @@ export async function deleteFromDatabase(fileId: string) {
 }
 
 export async function uploadToStorage(file: File, filePath: string) {
-  const { error: storageError } = await supabase.storage
+  const { error: storageError } = await client.storage
     .from('csv-uploads')
     .upload(filePath, file);
 
@@ -113,7 +113,7 @@ export async function uploadToDatabase({
 }: {
   userId: string, fileName: string, filePath: string, fileSize: number, fileChecksum: string;
 }) {
-  const { error: dbError } = await supabase
+  const { error: dbError } = await client
     .from('user_csv_uploads')
     .insert([{
       user_id: userId,

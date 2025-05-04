@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router';
 import { toast } from 'sonner';
 import { z } from 'zod';
-import { supabase } from '@/clients/supabase';
+import { client } from '@/api/supabase/client';
 import { BorderBeam } from '@/components/magicui/border-beam';
 import { Button } from '@/components/ui/button';
 import {
@@ -38,7 +38,7 @@ function PasswordRecovery() {
     setLoading(true);
 
     try {
-      const { error } = await supabase.auth.resetPasswordForEmail(values.email, {
+      const { error } = await client.auth.resetPasswordForEmail(values.email, {
         redirectTo: `${window.location.origin}/update-password`,
       });
 

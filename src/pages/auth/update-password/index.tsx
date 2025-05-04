@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router';
 import { toast } from 'sonner';
 import { z } from 'zod';
-import { supabase } from '@/clients/supabase';
+import { client } from '@/api/supabase/client';
 import { BorderBeam } from '@/components/magicui/border-beam';
 import { Button } from '@/components/ui/button';
 import {
@@ -61,7 +61,7 @@ function UpdatePassword() {
     setLoading(true);
 
     try {
-      const { error } = await supabase.auth.updateUser({
+      const { error } = await client.auth.updateUser({
         password: values.password,
       });
 
